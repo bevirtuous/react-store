@@ -2,11 +2,9 @@ module.exports = (api) => {
   api.cache(false);
 
   return {
-    compact: true,
+    compact: false,
     presets: [
-      ['@babel/preset-env', {
-        modules: false,
-      }],
+      '@babel/preset-env',
       '@babel/preset-react',
     ],
     plugins: [

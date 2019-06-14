@@ -7,9 +7,16 @@
   "author": "devbucket <flomueller1981@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --config ./sandbox/webpack.config.js"
+    "start": "NODE_ENV=development webpack-dev-server --config ./sandbox/webpack.config.js",
+    "lint": "eslint --cache --cache-location .cache/.eslintcache src",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "cover": "jest --coverage",
+    "cover:serve": "npm run cover && http-server ./coverage/lcov-report -g",
+    "clean": "rm -rf ./node_modules && rm -rf ./.cache-loader && rm -rf ./.cache && rm -rf ./dist && npm i"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
