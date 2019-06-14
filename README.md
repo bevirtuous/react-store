@@ -180,7 +180,7 @@ function MyComponent() {
 We understand that is hard to refactor your codebase all at once. Maybe you made the decission
 to switch from Redux to **React Store**, but you can't invest the time to get rid of everthing
 related to Redux. Therefore **React Store** also provides you with its own implementation
-of `react-redux`'s `connect()` Higher Order Component (HOC). We understand that it is very likely
+of [React Redux](https://react-redux.js.org/)'s `connect()` Higher Order Component (HOC). We understand that it is very likely
 that you use this module to connect your Redux store with your React application.
 
 ```jsx
