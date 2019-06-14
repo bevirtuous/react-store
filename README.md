@@ -1,4 +1,4 @@
-# React Store
+# React Store &middot; [![Build Status](https://travis-ci.org/bevirtuous/react-store.svg?branch=master)](https://travis-ci.org/bevirtuous/react-store) [![Coverage Status](https://coveralls.io/repos/github/bevirtuous/react-store/badge.svg)](https://coveralls.io/github/bevirtuous/react-store) [![GitHub (pre-)release](https://img.shields.io/github/release/bevirtuous/react-store/all.svg)](https://github.com/bevirtuous/react-store/releases)
 
 A very simple but reliable state container for ReactJS applications.
 
