@@ -1,10 +1,11 @@
 # React Store &middot; [![Build Status](https://travis-ci.org/bevirtuous/react-store.svg?branch=master)](https://travis-ci.org/bevirtuous/react-store) [![Coverage Status](https://coveralls.io/repos/github/bevirtuous/react-store/badge.svg)](https://coveralls.io/github/bevirtuous/react-store) [![GitHub (pre-)release](https://img.shields.io/github/release/bevirtuous/react-store/all.svg)](https://github.com/bevirtuous/react-store/releases)
 
-A very simple but reliable state container for ReactJS applications.
+**React Store** is a very simple but reliable state container for
+[React](https://reactjs.org) applications.
 
-It helps you write React applications that store application state.
-It replicates the way how [Redux](https://redux.js.org/) works and provides almost
-the same mechanisms - but without Redux - all done in pure React
+It helps you write React applications that store application state by replicating
+the way how [Redux](https://redux.js.org/) works with almost
+the same mechanisms - but completelly without Redux - all done in pure React
 using [React's Context API](https://reactjs.org/docs/context.html).
 
 It provides you with React Hooks and React HOCs for you to be able to easily
@@ -39,6 +40,7 @@ application components and pass in your reducer:
 import React from 'react';
 import { Store, combineReducers } from '@virtuous/react-store';
 
+// A simple reducer.
 function counter(state = 0, action) {
   switch (action.type) {
     case 'INCREMENT':
@@ -74,72 +76,141 @@ in the [Redux Documentation](https://redux.js.org/api/combinereducers).
 
 ## Dispatching actions
 
-There is **four** (4) different ways that you can approach to dispatch an action.
+There are multiple ways how you can dispatch an action with the **React Store**.
 
-You can use the `useDispatch()` React Hook:
+The easiest is the `dispatch()` helper, that lets you dispatch an action from
+anywhere in your code:
+
+```js
+import { dispatch } from '@virtuous/react-store';
+
+dispatch(increment({ type: 'INCREMENT' }));
+```
+
+You can use this helper anywhere. Even in React components. It does not to anything
+else but the store.
+
+If your code is based in React Hooks and you want to continue using this
+paradigm, you can use the `useDispatch()` React Hook:
 
 ```jsx
 import { useDispatch } from '@virtuous/react-store';
 
-function increment() {
-  return {
-    type: 'INCREMENT',
-  };
-}
-
 function MyComponent() {
   const dispatch = useDispatch();
 
-  function handleIncrement() {
-    dispatch(increment());
+  function increment() {
+    dispatch({ type: 'INCREMENT' });
   }
 
-  /* Your component logic */
+  return (
+    <button onClick={increment}>Increment</button>
+  )
 }
 ```
 
-You can also use the `withDispatch()` HOC:
+There are cases where it does not make sense to write a functional component. Or it is simply
+not possible. For these rare cases, **React Store** provides the `withDispatch()` higher order component:
 
 ```jsx
+import React from 'react';
 import { withDispatch } from '@virtuous/react-store';
 
-function increment() {
-  return {
-    type: 'INCREMENT',
-  };
-}
-
-function MyComponent({ dispatch }) {
-  function handleIncrement() {
-    dispatch(increment());
+class MyComponent extends React.Component {
+  increment = () => {
+    this.props.dispatch({ type: 'INCREMENT' });
   }
 
-  /* Your component logic */
+  render() {
+    return (
+      <button onClick={this.increment}>Increment</button>
+    )
+  }
 }
 
 export default withDispatch(MyComponent);
 ```
 
-You can use the `react-redux` approach of using the `connect` Higher Order Component (HOC):
+## Accessing store data
+
+You might ask yourself "can I still use selectors with this tool?". The answer is **YES**.
+[Reselect](https://github.com/reduxjs/reselect) is inspired and meant
+to be used with Redux, but it is not directly connected to it. Therefore
+the `state` and `props` arguments must not come from Redux. You could in
+fact store the state completely by your own and still use reselect.
+
+Let's discover the way, how you can access store data in **React Store**.
+
+Again, the easiest way to do that, is to use the `select()` helper, that lets you access
+data from anywhere in you codebase:
+
+```js
+import { createSelector } from 'reselect';
+import { select } from '@virtuous/react-store';
+
+const getCounter = createSelector(
+  state => state.counter
+);
+
+const count = select(getCounter);
+```
+
+You can als use the React Hook to access data inside your functional component:
 
 ```jsx
+import React from 'react';
+import { useSelector } from '@virtuous/react-store';
+import { createSelector } from 'reselect';
+
+const getCounter = createSelector(
+  state => state.counter
+);
+
+function MyComponent() {
+  const count = useSelector(getCounter);
+
+  return (
+    // The component output.
+  )
+}
+```
+
+## connect()
+
+We understand that is hard to refactor your codebase all at once. Maybe you made the decission
+to switch from Redux to **React Store**, but you can't invest the time to get rid of everthing
+related to Redux. Therefore **React Store** also provides you with its own implementation
+of `react-redux`'s `connect()` Higher Order Component (HOC). We understand that it is very likely
+that you use this module to connect your Redux store with your React application.
+
+```jsx
+import { createSelector } from 'reselect';
 import { connect } from '@virtuous/react-store';
 
-function MyComponent({ increment }) {
+function MyComponent({ increment, decrement, counter }) {
   /* Your component logic */
 }
 
-function increment() {
+const getCounter = createSelector(
+  state => state.counter
+);
+
+function mapStateToProps(state) {
   return {
-    type: 'INCREMENT',
+    counter: getCounter(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    increment: () => dispatch(increment()),
+    increment: () => dispatch({ type: 'INCREMENT' }),
+    decrement: () => dispatch({ type: 'DECREMENT' }),
   };
 }
 
-export default connect(null, mapDispatchToProps)(MyComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
 ```
+
+> **REMEMBER**: We can not provide every functionality that the original `react-redux` module
+> provides. Therefore the only two arguments the `connect()` HOC accepts,
+> are `mapStateToProps` and `mapDispatchToProps`. It is only meant to help you migrate.
