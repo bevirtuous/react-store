@@ -1,6 +1,6 @@
 {
   "name": "@virtuous/react-store",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A state container for React applications.",
   "main": "index.js",
   "repository": "git@github.com:bevirtuous/react-store.git",
@@ -13,7 +13,9 @@
     "test:watch": "jest --watchAll",
     "cover": "jest --coverage",
     "cover:serve": "yarn cover && http-server ./coverage/lcov-report -g",
-    "clean": "rm -rf ./node_modules && rm -rf ./.cache-loader && rm -rf ./.cache && rm -rf ./dist && npm i"
+    "preversion": "yarn test && yarn lint",
+    "version": "make build && git add -A",
+    "postversion": "git push && git push --tags && npm publish ./dist/ --access public"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

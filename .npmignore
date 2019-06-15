@@ -1,0 +1,11 @@
+coverage/
+tests/
+src/
+.git/
+.vscode/
+.idea/
+.nyc_output/
+.eslintignore
+.eslintrc.js
+.travis.yml
+babel.config.js
