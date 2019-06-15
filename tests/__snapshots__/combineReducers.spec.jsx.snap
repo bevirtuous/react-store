@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`combineReducers should return an empty object if no reducers are passed 1`] = `Object {}`;
+
+exports[`combineReducers should return the correct state if called 1`] = `
+Object {
+  "test": Object {
+    "foo": "bar",
+  },
+}
+`;

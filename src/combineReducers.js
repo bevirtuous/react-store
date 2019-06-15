@@ -1,4 +1,4 @@
-const combineReducers = reducers => (
+const combineReducers = (reducers = {}) => (
   (state = {}, action) => (
     Object.keys(reducers).reduce((nextState, key) => {
       // eslint-disable-next-line no-param-reassign

@@ -8,9 +8,16 @@ import { storeData } from './Store';
  * string constants for action types.
  */
 export const dispatch = (action) => {
+  if (typeof action === 'undefined') {
+    throw new Error('The dispatch helper can only be called with a valid action.');
+  }
   emitter.emit(STORE_DISPATCH, action);
 };
 
-export const select = (selector, props) => (
-  selector(storeData.store.getState(), props)
-);
+export const select = (selector, props) => {
+  if (typeof selector === 'undefined') {
+    throw new Error('The select helper can only be called with a valid selector');
+  }
+
+  return selector(storeData.store.getState(), props);
+};
