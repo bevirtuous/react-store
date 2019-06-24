@@ -125,6 +125,7 @@ export default class Store extends PureComponent {
    * @param {Object} action A plain object representing "what changed". An action must have
    * a `type` property which may not be `undefined`. It is a good idea to use
    * string constants for action types.
+   * @returns {Object} The new state.
    */
   dispatch = (action) => {
     if (!isPlainObject(action)) {
@@ -149,9 +150,13 @@ export default class Store extends PureComponent {
     const { state } = this;
 
     this.isDispatching = true;
+
     const newState = reducer(state, action);
+
     this.setState(newState);
     this.isDispatching = false;
+
+    return newState;
   }
 
   /**
