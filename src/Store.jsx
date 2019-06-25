@@ -182,7 +182,7 @@ export default class Store extends PureComponent {
     const { children } = this.props;
 
     return (
-      <StoreContext.Provider value={storeData.store}>
+      <StoreContext.Provider value={{ ...storeData.store, __state: this.state }}>
         {children}
       </StoreContext.Provider>
     );
