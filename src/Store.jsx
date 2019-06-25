@@ -153,8 +153,8 @@ export default class Store extends PureComponent {
 
     const newState = reducer(state, action);
 
-    this.setState(newState);
     this.isDispatching = false;
+    this.setState(newState);
 
     return newState;
   }
