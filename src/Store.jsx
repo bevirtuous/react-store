@@ -163,27 +163,16 @@ export default class Store extends PureComponent {
    * Returns the state tree managed by the store.
    * @returns {Object} The current state tree of your application.
    */
-  getState = () => {
-    if (this.isDispatching) {
-      throw new Error(
-        'You may not call getState() while the reducer is executing. '
-        + 'The reducer has already received the state as an argument. '
-        + 'Pass it down from the top reducer instead of reading it from the store.'
-      );
-    }
-
-    return this.state;
-  }
+  getState = () => this.state
 
   /**
    * @returns {JSX.Element}
    */
   render() {
     const { children } = this.props;
-    const { state } = this.state;
 
     return (
-      <StoreContext.Provider value={{ ...storeData.store, __state: state }}>
+      <StoreContext.Provider value={storeData.store}>
         {children}
       </StoreContext.Provider>
     );
