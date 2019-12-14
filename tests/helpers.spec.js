@@ -1,6 +1,5 @@
 import { dispatch, select } from '../src/helpers';
 import { STORE_DISPATCH, emitter } from '../src/events';
-import { storeData } from '../src/Store';
 
 jest.mock('../src/events', () => ({
   STORE_DISPATCH: 'STORE_DISPATCH',

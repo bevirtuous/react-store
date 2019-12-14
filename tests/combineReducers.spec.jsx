@@ -1,4 +1,4 @@
-import combineReducers from '../src/combineReducers';
+import { combineReducers } from '../src/combineReducers';
 
 describe('combineReducers', () => {
   it('should return an empty object if no reducers are passed', () => {

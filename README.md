@@ -52,7 +52,7 @@ function counter(state = 0, action) {
   }
 }
 
-const rootReducer = combineStore({ counter });
+const rootReducer = combineReducers({ counter });
 
 function App() {
   <Store reducer={rootReducer}>
