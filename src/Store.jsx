@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import StoreContext from './context';
-import isPlainObject from './utils/isPlainObject';
+import { StoreContext } from './context';
+import { isPlainObject } from './utils/isPlainObject';
 import { emitter, STORE_DISPATCH } from './events';
 
 export const storeData = {
@@ -16,7 +16,7 @@ export const storeData = {
  * parts of the state tree respond to actions, you may combine several reducers
  * into a single reducer function by using `combineReducers`.
  */
-export default class Store extends PureComponent {
+export class Store extends PureComponent {
   static propTypes = {
     /**
      * This usually represents your application contents. Everything that should be covered by

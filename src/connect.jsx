@@ -1,16 +1,20 @@
 import React from 'react';
-import StoreContext from './context';
+import { StoreContext } from './context';
 
-export default (mapStateToProps, mapDispatchToProps) => (
-  Component => props => (
-    <StoreContext.Consumer>
-      {({ dispatch, getState }) => (
-        <Component
-          {...props}
-          {...(mapStateToProps(getState(), props) || {})}
-          {...(mapDispatchToProps(dispatch, props) || {})}
-        />
-      )}
-    </StoreContext.Consumer>
-  )
-);
+export function connect(mapStateToProps, mapDispatchToProps) {
+  return function withConnect(Component) {
+    return function ConnectedComponent(props) {
+      return (
+        <StoreContext.Consumer>
+          {({ dispatch, getState }) => (
+            <Component
+              {...props}
+              {...(mapStateToProps(getState(), props) || {})}
+              {...(mapDispatchToProps(dispatch, props) || {})}
+            />
+          )}
+        </StoreContext.Consumer>
+      );
+    };
+  };
+}

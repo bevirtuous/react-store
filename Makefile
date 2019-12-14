@@ -7,8 +7,9 @@ clean:
 		npm install
 
 build:
+		rm -rf ./dist/
 		npx babel ./src/ --out-dir ./dist --ignore tests,spec.js,spec.jsx,__snapshots__,.eslintrc.js,jest.config.js,dist,coverage,node_modules
 		cp ./package.json ./dist/ 2>/dev/null || :
 		cp ./package-lock.json ./dist/ 2>/dev/null || :
 		cp ./README.md ./dist/ 2>/dev/null || :
-		cp ./index.d.ts ./dist/ 2>/dev/null || :
+		cp ./src/index.d.ts ./dist/ 2>/dev/null || :

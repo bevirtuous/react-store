@@ -1,10 +1,15 @@
 module.exports = (api) => {
-  api.cache(false);
+  api.cache(true);
 
   return {
     compact: false,
     presets: [
-      '@babel/preset-env',
+      ['@babel/preset-env', {
+        targets: {
+          browsers: ['ie >= 11'],
+        },
+        exclude: ['transform-async-to-generator', 'transform-regenerator'],
+      }],
       '@babel/preset-react',
     ],
     plugins: [
