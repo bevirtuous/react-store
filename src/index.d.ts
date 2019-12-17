@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 
 export interface Action<T = any> {
@@ -47,7 +48,9 @@ export interface StoreProps {
   middlewares?: Function[];
 }
 
-export function Store(props: StoreProps): JSX.Element;
+export interface Store {
+  (props: StoreProps): JSX.Element;
+}
 
 export interface MapStateToProps<P = any, R = any> {
   (state: State, ownProps: P): R;
@@ -59,11 +62,29 @@ export interface MapDispatchToProps<P = any, R = any> {
 
 export type Selector<P, R> = (state: State, props?: P, ...args: any[]) => R;
 
-export function combineReducers(reducers: CombinedReducers): Reducer;
+export interface combineReducers {
+  (reducers: CombinedReducers): Reducer;
+}
 
 /**
 * Dispatches an **action** from anywhere in your codebase.
 */
-export function dispatch(action: AnyAction): void;
+export interface dispatch {
+  (action: AnyAction): void;
+}
 
-export function select<P, R>(selector: Selector<P, R>, props?: P): R;
+export interface select<P, R> {
+  (selector: Selector<P, R>, props?: P): R;
+}
+
+export interface useDispatch {
+  (): Dispatch;
+}
+
+export interface useSelector<P, R> {
+  (selector: Selector, props: P): R;
+}
+
+export interface useStore {
+  (): ReactStore;
+}
