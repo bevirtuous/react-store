@@ -82,7 +82,7 @@ export interface useDispatch {
 }
 
 export interface useSelector<P, R> {
-  (selector: Selector, props: P): R;
+  (selector: Selector<P, R>, props: P): R;
 }
 
 export interface useStore {
