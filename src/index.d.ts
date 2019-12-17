@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React from 'react';
 
 export interface Action<T = any> {
@@ -48,9 +47,15 @@ export interface StoreProps {
   middlewares?: Function[];
 }
 
-export interface Store {
-  (props: StoreProps): JSX.Element;
-}
+/**
+ * Creates a store that holds the state tree.
+ * The only way to change the data in the store is to call `dispatch()` on it.
+ *
+ * There should only be a single store in your app. To specify how different
+ * parts of the state tree respond to actions, you may combine several reducers
+ * into a single reducer function by using `combineReducers`.
+ */
+export function Store(props: StoreProps): JSX.Element;
 
 export interface MapStateToProps<P = any, R = any> {
   (state: State, ownProps: P): R;
@@ -62,29 +67,29 @@ export interface MapDispatchToProps<P = any, R = any> {
 
 export type Selector<P, R> = (state: State, props?: P, ...args: any[]) => R;
 
-export interface combineReducers {
-  (reducers: CombinedReducers): Reducer;
-}
+/**
+ * Combines an object of many reducers to one new higher order reducer.
+ */
+export function combineReducers(reducers: CombinedReducers): Reducer;
 
 /**
 * Dispatches an **action** from anywhere in your codebase.
 */
-export interface dispatch {
-  (action: AnyAction): void;
-}
+export function dispatch(action: AnyAction): void;
 
-export interface select<P, R> {
-  (selector: Selector<P, R>, props?: P): R;
-}
+export function select<P, R>(selector: Selector<P, R>, props?: P): R;
 
-export interface useDispatch {
-  (): Dispatch;
-}
+/**
+ * Returns the global application store's **dispatch** function.
+ */
+export function useDispatch(): Dispatch;
 
-export interface useSelector<P, R> {
-  (selector: Selector<P, R>, props: P): R;
-}
+/**
+ * Takes a **selector** and returns its output value.
+ */
+export function useSelector<P, R>(selector: Selector<P, R>, props: P): R;
 
-export interface useStore {
-  (): ReactStore;
-}
+/**
+ * Returns an instance of the store.
+ */
+export function useStore(): ReactStore;
