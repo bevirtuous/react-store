@@ -57,7 +57,7 @@ export class Store extends PureComponent {
 
     this.state = props.reducer(props.initialState, {});
     storeData.store = this.applyMiddleware(props.middlewares);
-    emitter.addListener(STORE_DISPATCH, this.dispatch);
+    emitter.addListener(STORE_DISPATCH, storeData.store.dispatch);
   }
 
   componentDidMount() {
@@ -67,7 +67,7 @@ export class Store extends PureComponent {
 
   componentWillUnmount() {
     // Remove the dispatch listener.
-    emitter.removeListener(STORE_DISPATCH, this.dispatch);
+    emitter.removeListener(STORE_DISPATCH, storeData.store.dispatch);
   }
 
   /**
