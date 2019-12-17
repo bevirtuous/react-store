@@ -1,6 +1,6 @@
 {
   "name": "@virtuous/react-store",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A state container for React applications.",
   "main": "index.js",
   "repository": "git@github.com:bevirtuous/react-store.git",
