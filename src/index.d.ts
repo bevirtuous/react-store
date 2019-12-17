@@ -65,7 +65,7 @@ export interface MapDispatchToProps<P = any, R = any> {
   (dispatch: Dispatch, ownProps: P): R;
 }
 
-export type Selector<P, R> = (state: State, props?: P, ...args: any[]) => R;
+export type Selector<R, P = any> = (state: State, props?: P, ...args: any[]) => R;
 
 /**
  * Combines an object of many reducers to one new higher order reducer.
@@ -77,7 +77,7 @@ export function combineReducers(reducers: CombinedReducers): Reducer;
 */
 export function dispatch(action: AnyAction): void;
 
-export function select<P, R>(selector: Selector<P, R>, props?: P): R;
+export function select<R, P = any>(selector: Selector<P, R>, props?: P): R;
 
 /**
  * Returns the global application store's **dispatch** function.
@@ -87,7 +87,7 @@ export function useDispatch(): Dispatch;
 /**
  * Takes a **selector** and returns its output value.
  */
-export function useSelector<P, R>(selector: Selector<P, R>, props: P): R;
+export function useSelector<R, P = any>(selector: Selector<P, R>, props?: P): R;
 
 /**
  * Returns an instance of the store.
